@@ -8,6 +8,7 @@ import (
 
 
 type SqlHandler struct {
+	// *Sql.DBはdatabase/sqlパッケージのDB接続に必要なtype
 	Conn *sql.DB
 }
 
