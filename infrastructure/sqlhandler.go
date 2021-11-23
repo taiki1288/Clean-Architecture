@@ -27,6 +27,8 @@ func NewSqlHandler() database.SqlHandler {
 
 func (handler *SqlHandler) Execute(statement string, args ...interface{}) (database.Result, error) {
 	res := SqlResult{}
+	// Execは、行を返さずにクエリを実行する。
+	// 引数は(クエリ, クエリ内のプレースホルダパラメータ)
 	result, err := handler.Conn.Exec(statement, args...)
 	if err != nil {
 		return res, err
