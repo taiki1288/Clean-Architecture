@@ -51,3 +51,7 @@ func (r SqlRow) Scan(dest ...interface{}) error {
 func (r SqlRow) Next() bool {
 	return r.Rows.Next()
 }
+
+func (r SqlRow) Close() error {
+	return r.Rows.Close()
+}
