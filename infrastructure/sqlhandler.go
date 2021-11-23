@@ -43,3 +43,7 @@ type SqlRow struct {
 	// Rows型
 	Rows *sql.Rows
 }
+
+func (r SqlRow) Scan(dest ...interface{}) error {
+	return r.Rows.Scan(dest...)
+}
