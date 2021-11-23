@@ -25,6 +25,16 @@ func NewSqlHandler() database.SqlHandler {
 	return sqlHandler
 }
 
+func (handler *SqlHandler) Execute(statement string, args ...interface{}) (database.Result, error) {
+	res := SqlResult{}
+	result, err := handler.Conn.Exec(statement, args...)
+	if err != nil {
+		return res, err
+	}
+	res.Result = result
+	return res, nil
+}
+
 // LastInsertId, RowsAffectedメソッドの呼び出しに必要な構造体
 type SqlResult struct {
 	// Result型
