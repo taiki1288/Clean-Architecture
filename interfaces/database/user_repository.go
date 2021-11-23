@@ -25,7 +25,9 @@ func (repo *UserRepository) Store(u domain.User) (id int, err error) {
 }
 
 func (repo *UserRepository) FindById(identifier int) (user domain.User, err error) {
+	// クエリを実行して行を返すようにしている。
 	row, err := repo.Query("SELECT id, first_name, last_name FROM users WHERE id = ?", identifier)
+	// deferを使って最後に実行されるようにしている。
 	defer row.Close()
 	if err != nil {
 		return
@@ -33,12 +35,37 @@ func (repo *UserRepository) FindById(identifier int) (user domain.User, err erro
 	var id int
 	var firstName string
 	var lastName string
+	// Scanメソッドで読み取れるようにしている
 	row.Next()
 	if err = row.Scan(&id, &firstName, &lastName); err != nil {
+		// Scanはポインタ変数を渡してインターフェースを実装している。
 		return
 	}
 	user.ID = id
 	user.FirstName = firstName
 	user.LastName = lastName
+	return
+}
+
+func (repo *UserRepository) FindAll() (users domain.Users, err error) {
+	rows, err := repo.Query("SELECT id, first_name, last_name, last_name FROM users")
+	defer rows.Close()
+	if err != nil {
+		return
+	}
+	for rows.Next() {
+		var id int
+		var firstName string
+		var lastName string
+		if err := rows.Scan(&id, &firstName, &lastName); err != nil {
+			continue
+		}
+		user := domain.User{
+			ID:        id,
+			FirstName: firstName,
+			LastName:  lastName,
+		}
+		users = append(users, user)
+	}
 	return
 }
