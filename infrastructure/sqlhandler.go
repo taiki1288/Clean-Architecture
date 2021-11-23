@@ -25,7 +25,9 @@ func NewSqlHandler() database.SqlHandler {
 	return sqlHandler
 }
 
+// LastInsertId, RowsAffectedメソッドの呼び出しに必要な構造体
 type SqlResult struct {
+	// Result型
 	Result sql.Result
 }
 
@@ -35,4 +37,9 @@ func (r SqlResult) LastInsertId() (int64, error) {
 
 func (r SqlResult) RowsAffected() (int64, error) {
 	return r.Result.RowsAffected()
+}
+
+type SqlRow struct {
+	// Rows型
+	Rows *sql.Rows
 }
