@@ -32,3 +32,7 @@ type SqlResult struct {
 func (r SqlResult) LastInsertId() (int64, error) {
 	return r.Result.LastInsertId()
 }
+
+func (r SqlResult) RowsAffected() (int64, error) {
+	return r.Result.RowsAffected()
+}
