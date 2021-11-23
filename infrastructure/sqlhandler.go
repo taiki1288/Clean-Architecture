@@ -1,6 +1,8 @@
 package infrastructure
+
 // DBは外部パッケージを使うので一番外側のinfrastructure層になる。
 import (
+	"Clean-Architecture/interfaces/database"
 	"database/sql"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -12,7 +14,7 @@ type SqlHandler struct {
 	Conn *sql.DB
 }
 
-func NewSqlHandler() *SqlHandler {
+func NewSqlHandler() database.SqlHandler {
 	conn, err := sql.Open("mysql", "root:@tcp(db:3306)/CleanArchitecture")
 	if err != nil {
 		panic(err.Error)
@@ -21,4 +23,8 @@ func NewSqlHandler() *SqlHandler {
 	sqlHandler := new(SqlHandler)
 	sqlHandler.Conn = conn
 	return sqlHandler
+}
+
+type SqlResult struct {
+	Result sql.Result
 }
