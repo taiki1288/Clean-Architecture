@@ -28,3 +28,7 @@ func NewSqlHandler() database.SqlHandler {
 type SqlResult struct {
 	Result sql.Result
 }
+
+func (r SqlResult) LastInsertId() (int64, error) {
+	return r.Result.LastInsertId()
+}
