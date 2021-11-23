@@ -39,19 +39,23 @@ func (r SqlResult) RowsAffected() (int64, error) {
 	return r.Result.RowsAffected()
 }
 
+// Scan, Next, Closeメソッドの呼び出しに必要な構造体
 type SqlRow struct {
 	// Rows型
 	Rows *sql.Rows
 }
 
 func (r SqlRow) Scan(dest ...interface{}) error {
+	// 現在の行の列をdestが指す値にコピーする。
 	return r.Rows.Scan(dest...)
 }
 
 func (r SqlRow) Next() bool {
+	// Scan メソッドで読み取るため，次の結果行を準備します。成功した場合は trueになる。
 	return r.Rows.Next()
 }
 
 func (r SqlRow) Close() error {
+	// Rowsを閉じ、それ以上の列挙はできなくなる。
 	return r.Rows.Close()
 }
