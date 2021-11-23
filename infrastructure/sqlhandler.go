@@ -14,6 +14,7 @@ type SqlHandler struct {
 	Conn *sql.DB
 }
 
+// NewSqlHandlerの戻り値はinterfaceのSqlHandler
 func NewSqlHandler() database.SqlHandler {
 	conn, err := sql.Open("mysql", "root:@tcp(db:3306)/CleanArchitecture")
 	if err != nil {
@@ -38,10 +39,13 @@ func (handler *SqlHandler) Execute(statement string, args ...interface{}) (datab
 }
 
 func (handler *SqlHandler) Query(statement string, args ...interface{}) (database.Row, error) {
+	// Queryは、行を返すクエリ(通常は SELECT)を実行する。
+	// 引数は(クエリ, クエリ内のプレースホルダパラメータ)
 	rows, err := handler.Conn.Query(statement, args...)
 	if err != nil {
 		return new(SqlRow), err
 	}
+	// newは指定した方のポインタ型を生成する関数。(構造体の初期化)
 	row := new(SqlRow)
 	row.Rows = rows
 	return row, nil
