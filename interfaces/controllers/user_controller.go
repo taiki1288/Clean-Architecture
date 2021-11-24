@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"Clean-Architecture/domain"
 	"Clean-Architecture/interfaces/database"
 	"Clean-Architecture/usecase"
 )
@@ -17,4 +18,15 @@ func NewUserController(sqlHandler database.SqlHandler) *UserController {
 			},
 		},
 	}
+}
+
+func (controller *UserController) Create(c Context) {
+	u := domain.User{}
+	c.Bind(&u)
+	err := controller.Interactor.Add(u)
+	if err != nil {
+		c.JSON(500, NewError(err))
+		return
+	}
+	c.JSON(201)
 }
