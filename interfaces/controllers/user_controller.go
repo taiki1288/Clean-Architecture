@@ -4,6 +4,7 @@ import (
 	"Clean-Architecture/domain"
 	"Clean-Architecture/interfaces/database"
 	"Clean-Architecture/usecase"
+	"strconv"
 )
 
 type UserController struct {
@@ -29,4 +30,14 @@ func (controller *UserController) Create(c Context) {
 		return
 	}
 	c.JSON(201)
+}
+
+func (controller *UserController) Show(c Context) {
+	id, _ := strconv.Atoi(c.Param("id"))
+	user, err := controller.Interactor.UserById(id)
+	if err != nil {
+		c.JSON(500, NewError(err))
+		return
+	}
+	c.JSON(200, user)
 }
