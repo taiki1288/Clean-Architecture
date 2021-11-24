@@ -4,7 +4,7 @@ package database
 type SqlHandler interface {
 	// 2つのメソッドの戻り値はResultとRowのインターフェースになっているのでこれによって依存ルールを守ることができる。
 	Execute(string, ...interface{}) (Result, error)
-	Query(string ...interface{}) (Row, error)
+	Query(string, ...interface{}) (Row, error)
 }
 
 // Executeの戻り値
