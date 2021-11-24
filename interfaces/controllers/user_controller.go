@@ -32,6 +32,15 @@ func (controller *UserController) Create(c Context) {
 	c.JSON(201)
 }
 
+func (controller *UserController) Index(c Context) {
+	users, err := controller.Interactor.Users()
+	if err != nil {
+		c.JSON(500, NewError(err))
+		return
+	}
+	c.JSON(200, users)
+}
+
 func (controller *UserController) Show(c Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
 	user, err := controller.Interactor.UserById(id)
