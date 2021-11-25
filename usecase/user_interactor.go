@@ -6,7 +6,7 @@ type UserInteractor struct {
 	UserRepository UserRepository
 }
 
-func (interactor *UserInteractor) Add(u domain.User) (err error) {
+func (interactor *UserInteractor) Add(u domain.User) (user domain.User, err error) {
 	_, err = interactor.UserRepository.Store(u)
 	return
 }

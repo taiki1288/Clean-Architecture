@@ -26,12 +26,12 @@ func (controller *UserController) Create(c Context) {
 	// User型を初期化
 	u := domain.User{}
 	c.Bind(&u)
-	err := controller.Interactor.Add(u)
+	user, err := controller.Interactor.Add(u)
 	if err != nil {
 		c.JSON(500, NewError(err))
 		return
 	}
-	c.JSON(201)
+	c.JSON(201, user)
 }
 
 func (controller *UserController) Index(c Context) {
