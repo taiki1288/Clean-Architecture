@@ -8,6 +8,7 @@ import (
 )
 
 type UserController struct {
+	// usecase層でUserInteratorはinterfaces層にあるUserRepositoryを参照しているのでinterfaces/databaseをインポート
 	Interactor usecase.UserInteractor
 }
 
@@ -22,6 +23,7 @@ func NewUserController(sqlHandler database.SqlHandler) *UserController {
 }
 
 func (controller *UserController) Create(c Context) {
+	// User型を初期化
 	u := domain.User{}
 	c.Bind(&u)
 	err := controller.Interactor.Add(u)
@@ -42,6 +44,7 @@ func (controller *UserController) Index(c Context) {
 }
 
 func (controller *UserController) Show(c Context) {
+	// strconv.Atoiで文字列のidをint型に変換している。
 	id, _ := strconv.Atoi(c.Param("id"))
 	user, err := controller.Interactor.UserById(id)
 	if err != nil {
