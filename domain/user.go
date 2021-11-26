@@ -6,6 +6,7 @@ type User struct {
 	ID        int
 	FirstName string
 	LastName  string
+	FullName  string
 }
 
 // User型のスライスを宣言している
