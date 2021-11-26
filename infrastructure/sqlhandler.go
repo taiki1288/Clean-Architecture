@@ -16,7 +16,7 @@ type SqlHandler struct {
 
 // NewSqlHandlerの戻り値はinterfaceのSqlHandler
 func NewSqlHandler() database.SqlHandler {
-	conn, err := sql.Open("mysql", "root:@tcp(db:3306)/CleanArchitecture")
+	conn, err := sql.Open("mysql", "root:@/CleanArchitecture")
 	if err != nil {
 		panic(err.Error)
 	}
