@@ -8,7 +8,13 @@ type UserInteractor struct {
 
 // User情報を取得して返却するメソッド
 func (interactor *UserInteractor) Add(u domain.User) (user domain.User, err error) {
-	_, err = interactor.UserRepository.Store(u)
+	// ユーザーを保存する処理
+	identifier, err := interactor.UserRepository.Store(u)
+	if err != nil {
+		return
+	}
+	// 保存されたユーザー情報を返す処理
+	user, err = interactor.UserRepository.FindById(identifier)
 	return
 }
 
