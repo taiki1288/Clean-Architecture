@@ -44,6 +44,7 @@ func (repo *UserRepository) FindById(identifier int) (user domain.User, err erro
 	user.ID = id
 	user.FirstName = firstName
 	user.LastName = lastName
+	user.Build()
 	return
 }
 
