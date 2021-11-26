@@ -44,6 +44,7 @@ func (repo *UserRepository) FindById(identifier int) (user domain.User, err erro
 	user.ID = id
 	user.FirstName = firstName
 	user.LastName = lastName
+	// FindAllメソッドの値を返す前にBuildメソッドを呼び出す。
 	user.Build()
 	return
 }
@@ -66,6 +67,8 @@ func (repo *UserRepository) FindAll() (users domain.Users, err error) {
 			FirstName: firstName,
 			LastName:  lastName,
 		}
+		// FindAllメソッドの値を返す前にBuildメソッドを呼び出す。
+		// そうすることでusecase層より内側に留めておくことができる。←でもなぜ？
 		users = append(users, *user.Build())
 	}
 	return
