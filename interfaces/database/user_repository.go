@@ -49,6 +49,7 @@ func (repo *UserRepository) FindById(identifier int) (user domain.User, err erro
 	return
 }
 
+// ユーザー一覧を取得するメソッド
 func (repo *UserRepository) FindAll() (users domain.Users, err error) {
 	rows, err := repo.Query("SELECT id, first_name, last_name, last_name FROM users")
 	defer rows.Close()
