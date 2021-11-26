@@ -66,7 +66,7 @@ func (repo *UserRepository) FindAll() (users domain.Users, err error) {
 			FirstName: firstName,
 			LastName:  lastName,
 		}
-		users = append(users, user)
+		users = append(users, *user.Build())
 	}
 	return
 }
